@@ -11,6 +11,7 @@ public static class ConfigurationHelper
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", true, true)
             .AddJsonFile($"appsettings.{environmentName}.json", true, true)
+            // add connection string here?
             .Build();
     }
 }

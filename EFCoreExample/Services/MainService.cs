@@ -122,6 +122,26 @@ public class MainService
         // TODO: Implement this method to delete a classroom
         // You will need to ask the user for the ID of the classroom to delete
         // Then call the DeleteClassroomAsync method on the repository
+
+        _consoleService.Write("Enter the ID of the classroom you want to delete: ");
+        int classroomId;
+
+        if (!int.TryParse(_consoleService.ReadLine(), out classroomId))
+        {
+            Console.WriteLine("Invalid input. Please enter a valid integer ID.");
+            return;
+        }
+
+        try
+        {
+            // Call the DeleteClassroomAsync method on the repository
+            await _repository.DeleteClassroomAsync(classroomId);
+            _consoleService.WriteLine($"Classroom {classroomId} deleted successfully.");
+        }
+        catch (Exception ex)
+        {
+            _consoleService.WriteLine($"An error occurred while deleting the classroom: {ex.Message}");
+        }
     }
 
     public async Task DeleteStudentAsync()
@@ -129,6 +149,25 @@ public class MainService
         // TODO: Implement this method to delete a student
         // You will need to ask the user for the ID of the student to delete
         // Then call the DeleteStudentAsync method on the repository
+
+        _consoleService.Write("Enter the ID of the student you want to delete: ");
+        int studentId;
+
+        if (!int.TryParse(_consoleService.ReadLine(), out studentId))
+        {
+            _consoleService.WriteLine("Invalid input. Please enter a valid integer ID.");
+            return;
+        }
+
+        try
+        {
+            await _repository.DeleteStudentAsync(studentId);
+            _consoleService.WriteLine($"Student {studentId} deleted successfully.");
+        }
+        catch (Exception ex)
+        {
+            _consoleService.WriteLine($"An error occurred while deleting the student: {ex.Message}");
+        }
     }
 
     public async Task UpdateClassroomAsync()
@@ -136,6 +175,43 @@ public class MainService
         // TODO: Implement this method to update a classroom
         // You will need to ask the user for the ID of the classroom to update and the new details
         // Then call the UpdateClassroomAsync method on the repository
+
+        _consoleService.Write("Enter the ID of the classroom you want to update: ");
+        int classroomId;
+
+        if (!int.TryParse(_consoleService.ReadLine(), out classroomId))
+        {
+            _consoleService.WriteLine("Invalid input. Please enter a valid integer ID.");
+            return;
+        }
+
+        try
+        {
+            // Get the existing classroom from the repository
+            var classroomToUpdate = await _repository.GetClassroomByIdAsync(classroomId);
+
+            if (classroomToUpdate == null)
+            {
+                _consoleService.WriteLine($"Classroom with ID {classroomId} not found.");
+                return;
+            }
+
+            // Ask the user for the new name of the classroom
+            _consoleService.Write("Enter the new name of the classroom: ");
+            string newName = _consoleService.ReadLine();
+
+            classroomToUpdate.Name = newName;
+
+            // call add student here to update the list of students?????? 
+
+            // Pass the classroomId and the new details to the UpdateClassroomAsync method
+            await _repository.UpdateClassroomAsync(classroomToUpdate);
+            _consoleService.WriteLine($"Classroom {classroomId} updated successfully.");
+        }
+        catch (Exception ex)
+        {
+            _consoleService.WriteLine($"An error occurred while updating the classroom: {ex.Message}");
+        }
     }
 
     public async Task UpdateStudentAsync()
@@ -143,5 +219,41 @@ public class MainService
         // TODO: Implement this method to update a student
         // You will need to ask the user for the ID of the student to update and the new details
         // Then call the UpdateStudentAsync method on the repository
+
+        _consoleService.Write("Enter the ID of the student you want to update: ");
+        int studentId;
+
+        if (!int.TryParse(_consoleService.ReadLine(), out studentId))
+        {
+            _consoleService.WriteLine("Invalid input. Please enter a valid integer ID.");
+            return;
+        }
+
+        try
+        {
+            // Get the existing student from the repository
+            var studentToUpdate = await _repository.GetStudentByIdAsync(studentId);
+
+            if (studentToUpdate == null)
+            {
+                _consoleService.WriteLine($"Student with ID {studentId} not found.");
+                return;
+            }
+
+            _consoleService.Write("Enter the new name of the student: ");
+            string newName = _consoleService.ReadLine();
+
+            studentToUpdate.Name = newName;
+
+            // call add student here to update the list of students?????? 
+
+            // Call the UpdateStudentAsync method on the repository
+            await _repository.UpdateStudentAsync(studentToUpdate);
+            _consoleService.WriteLine($"Student {studentId} updated successfully.");
+        }
+        catch (Exception ex)
+        {
+            _consoleService.WriteLine($"An error occurred while updating the student: {ex.Message}");
+        }
     }
 }
