@@ -23,3 +23,4 @@ public abstract class SchoolContextFactory<TContext> : IDesignTimeDbContextFacto
     protected abstract void ConfigureOptionsBuilder(DbContextOptionsBuilder<TContext> optionsBuilder, string connectionString);
     protected abstract TContext CreateContext(DbContextOptions<TContext> options);
 }
+

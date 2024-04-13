@@ -202,7 +202,6 @@ public class MainService
 
             classroomToUpdate.Name = newName;
 
-            // call add student here to update the list of students?????? 
 
             // Pass the classroomId and the new details to the UpdateClassroomAsync method
             await _repository.UpdateClassroomAsync(classroomToUpdate);
@@ -245,7 +244,6 @@ public class MainService
 
             studentToUpdate.Name = newName;
 
-            // call add student here to update the list of students?????? 
 
             // Call the UpdateStudentAsync method on the repository
             await _repository.UpdateStudentAsync(studentToUpdate);

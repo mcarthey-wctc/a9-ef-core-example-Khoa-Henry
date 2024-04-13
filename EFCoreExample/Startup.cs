@@ -1,5 +1,6 @@
 using EFCoreExample.Contexts;
 using EFCoreExample.Contexts.Repositories;
+using EFCoreExample.Helpers;
 using EFCoreExample.Services;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +40,7 @@ public class Startup
         }
 
         services.AddScoped<ISchoolRepository, SchoolRepository>();
+        services.AddScoped<IConsoleService, ConsoleService>();
         services.AddScoped<MainService>();
     }
 }
